@@ -27,7 +27,7 @@ namespace CodeBlogFitness.BL.Controller
         {
             if (string.IsNullOrWhiteSpace(userName))
             {
-                throw new ArgumentNullException("Имя пользователя не быть быть пустым", nameof(userName));
+                throw new ArgumentNullException("Имя пользователя не может быть пустым", nameof(userName));
             }
             Users = GetUsersDate();
 
@@ -52,7 +52,8 @@ namespace CodeBlogFitness.BL.Controller
 
             using (var fs = new FileStream("users.dat", FileMode.OpenOrCreate))
             {
-                if (formatter.Deserialize(fs) is List<Model.User> users)
+
+                if (fs.Length > 0 && formatter.Deserialize(fs) is List<Model.User> users)
                 {
                     return users;
                 }
@@ -86,10 +87,6 @@ namespace CodeBlogFitness.BL.Controller
                 formatter.Serialize(fs, Users);
             }
         }
-        /// <summary>
-        /// Получить данные пользователя.
-        /// </summary>
-        /// <returns>ПОльзователь.</returns>
        
     }
 }
